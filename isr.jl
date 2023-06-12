@@ -5,20 +5,22 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ ae08fb2a-5f2b-4c8b-b364-9b4bd7fb762e
-begin
-	using Plots, LaTeXStrings, SpecialFunctions, PlutoUI
-	PlutoUI.TableOfContents(title="📚 Contents")
-	default(fontfamily="Computer Modern", linewidth=2, framestyle=:box, gridstyle=:dash, gridlinewidth=1.5, gridalpha=0.1, label=nothing)
-end
+using Plots, LaTeXStrings, SpecialFunctions, PlutoUI
 
 # ╔═╡ dde77964-c6d5-4c73-b60a-3c0b71f9f5bd
 using FFTW
+
+# ╔═╡ f58e32bb-9851-4434-8385-89d41746cc3a
+PlutoUI.TableOfContents(title="📚 Contents")
+
+# ╔═╡ 8e6305c3-aaa7-47e6-a6ad-94cfaaaa2c42
+default(fontfamily="Computer Modern", linewidth=2, framestyle=:box, gridstyle=:dash, gridlinewidth=1.5, gridalpha=0.1, label=nothing)
 
 # ╔═╡ 813ec220-c305-11ed-1dc6-8317f16e460a
 md"
 # Nonmagnetized and Collisionless Plasmas
 
-In this type of plasma, for a given species $s$ we have $\left\langle e^{j\mathbf{k}\cdot\Delta\mathbf{r}}\right\rangle=e^{-\frac{1}{2}k^2{C_s}^2\tau^2}$, and its corresponding Gordeyev integral $J_s(\omega)$ can be obtained via the relationship
+In this type of plasma, for a given species $s$ we have $\left\langle e^{j\mathbf{k}\cdot\Delta\mathbf{r}_s}\right\rangle=e^{-\frac{1}{2}k^2{C_s}^2\tau^2}$, and its corresponding Gordeyev integral $J_s(\omega)$ can be obtained via the relationship
 
 $jZ(\theta) \equiv \sqrt{2}kC_sJ_s(\omega) = \sqrt{\pi}e^{-\theta^2} - j2e^{-\theta^2}\int_0^{\theta}e^{t^2}dt,$
 
@@ -61,8 +63,8 @@ function nongmagnetized_collisionless(fₘᵢₙ, fₘₐₓ, num_points)
 	θᵢ = ω / (√2*k*Cᵢ)
 	Jₑ = jZ.(θₑ) / (√2*k*Cₑ)
 	Jᵢ = jZ.(θᵢ) / (√2*k*Cᵢ)
-	nₜₑ = 2*real(Jₑ)
-	nₜᵢ = 2*real(Jᵢ)
+	nₜₑ = 2 * real(Jₑ)
+	nₜᵢ = 2 * real(Jᵢ)
 	σₑ = (-im*ω.*Jₑ.+1) / (k*hₑ)^2
 	σᵢ = (-im*ω.*Jᵢ.+1) / (k*hᵢ)^2
 	electron_line = abs2.((σᵢ.+1) ./ (σₑ+σᵢ.+1)) .* nₜₑ
@@ -87,7 +89,9 @@ end
 
 # ╔═╡ ed12d4bf-59c9-406f-b01d-900d504f788a
 md"
-# Collisional Nonmagnetized Plasmas 
+# Nonmagnetized Collisional Plasmas
+
+## Predominantly Coulomb collisions
 
 In the high collision limit $\nu\gg kC_s$, the electron density spectrum's ion line can be approximated as
 
@@ -1403,6 +1407,8 @@ version = "1.4.1+0"
 
 # ╔═╡ Cell order:
 # ╠═ae08fb2a-5f2b-4c8b-b364-9b4bd7fb762e
+# ╠═f58e32bb-9851-4434-8385-89d41746cc3a
+# ╠═8e6305c3-aaa7-47e6-a6ad-94cfaaaa2c42
 # ╟─813ec220-c305-11ed-1dc6-8317f16e460a
 # ╠═6ad39a62-dead-4b25-9a3f-79468c7cc1db
 # ╟─69c735c0-c12d-47bb-bf3e-4d1d4e11780a
